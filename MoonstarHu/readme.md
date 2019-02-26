@@ -10,7 +10,9 @@
 
 ## HomeAssistant  
 
-> 页面：http://www.moonstarcode.top:8123  
+> 页面：http://www.moonstarcode.top:8123 
+
+![](https://moonstarimg.oss-cn-hangzhou.aliyuncs.com/img/HomeAssistant2.png)
 
 ![http://www.moonstarcode.top:8123](https://moonstarimg.oss-cn-hangzhou.aliyuncs.com/img/HomeAssistantIndex.png)
 
