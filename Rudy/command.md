@@ -1,2 +1,4 @@
 //手电筒
-![手电筒](C:\Users\PorG\Desktop\WORK\2.1jpg)
+
+
+![手电筒](https://github.com/shiep18/embai19/blob/master/Rudy/2.1.jpg)
