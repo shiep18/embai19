@@ -2,12 +2,11 @@
 
 ## 个人信息   
 >姓名：胡文兴  
->学号：20160957
+>学号：20160957  
 >邮箱：moonstarwork@163.com  
 >个人主页: [www.moonstarcode.top](http://www.moonstarcode.top/)  
 
->![](https://moonstarimg.oss-cn-hangzhou.aliyuncs.com/img/moonstar.png)  
-
+![](https://moonstarimg.oss-cn-hangzhou.aliyuncs.com/img/moonstar.png)  
 
 
 ## Fusion360部分   
