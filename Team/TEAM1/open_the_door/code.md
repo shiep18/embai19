@@ -14,12 +14,15 @@ int pushmusic = 4;
 int buttonState = 0;
 
 
-void playNum(uint8_t num) {
-  if (num > musicPlayer.getMusicNum() - 1) {
+void playNum(uint8_t num) 
+{
+  if (num > musicPlayer.getMusicNum() - 1)
+  {
     return;
   }
 
-  if (!musicPlayer.stopped()) {
+  if (!musicPlayer.stopped()) 
+  {
     musicPlayer.stopPlaying();  
   musicPlayer.flushCancel(both);  
 
@@ -43,7 +46,8 @@ void setup(void) {
   digitalWrite(SD_PIN_SEL, HIGH);
   delay(500);
 
-  if (! musicPlayer.begin()) { // initialise the music player
+  if (! musicPlayer.begin()) 
+  { // initialise the music player
     while (1);
   }
 
