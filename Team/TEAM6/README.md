@@ -9,7 +9,7 @@
 
 ## System Framework
 
-![](https://moonstarimg.oss-cn-hangzhou.aliyuncs.com/img/SmartHome.png)
+![](https://moonstarimg.oss-cn-hangzhou.aliyuncs.com/img/SmartHome1.png)
 
 
 
