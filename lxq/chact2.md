@@ -14,13 +14,13 @@
 # ![](ZND.JPG)
 
 # 舵机
-# ![](TJ.PNG)
+# ![](TJ.png)
 
 # OLED
-# ![](OLED.PNG)
+# ![](OLED.png)
 
 # 声控智能灯
 # ![](ZND.JPG)
 
 # 人体感应灯
-# ![](RTGYD.PNG)
+# ![](RTGYD.png)
