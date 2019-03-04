@@ -1,1 +1,1 @@
-![](Data.png)
+![](Dataquest.png)
