@@ -1,0 +1,1 @@
+![](rasmerry.jpg)
