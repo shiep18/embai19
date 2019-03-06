@@ -1,0 +1,13 @@
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(6, OUTPUT);
+}
+
+void loop()
+{
+  if (Serial.read() == '1') {
+    digitalWrite(6,HIGH);
+  }
+  if (Serial.read() == '2') digitalWrite(6,LOW);
+}
