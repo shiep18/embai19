@@ -12,4 +12,18 @@
 
 # python进度
 # ![](python进度.PNG)
+
+# VMware hello world.cpp
+# ![](虚拟机helloworld.PNG)
+
+# python练习做完了进度图
+# ![](python练习做完了.PNG)
+
+# opencv显示视频
+# ![](显示视频.PNG)
+
+
+# opencv显示本地视频
+# ![](opencv读取本地视频.PNG)
+
                                        
