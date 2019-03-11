@@ -12,4 +12,7 @@
 
 # python进度
 # ![](python进度.PNG)
+
+# VMware hello world.cpp
+# ![](虚拟机helloworld.PNG)
                                        
