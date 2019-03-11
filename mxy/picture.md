@@ -15,4 +15,11 @@
 
 # VMware hello world.cpp
 # ![](虚拟机helloworld.PNG)
+
+# python练习做完了进度图
+# ![](python练习做完了.PNG)
+
+# opencv显示视频
+# ![](显示视频.PNG)
+
                                        
