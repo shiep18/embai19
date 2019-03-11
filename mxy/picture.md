@@ -22,4 +22,8 @@
 # opencv显示视频
 # ![](显示视频.PNG)
 
+
+# opencv显示本地视频
+# ![](opencv读取本地视频.PNG)
+
                                        
