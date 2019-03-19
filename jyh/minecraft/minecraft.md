@@ -1,5 +1,0 @@
-# ![](minecraft1.png)
-# ![](minecraft2.png)
-# ![](minecraft3.png)
-# ![](minecraft4.jpg)
-# ![](minecraft5.jpg)
