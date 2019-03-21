@@ -27,4 +27,7 @@
 # ![](zigbee1.jpg)
 # ![](zigbee2.jpg)
 # ![](zigbee3.jpg)
+# ![](zigbee4_1.jpg)
+# ![](zigbee4_2.jpg)
+# ![](zigbee4_3.jpg)
 # ![](homeassistant.png)
