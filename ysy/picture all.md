@@ -30,3 +30,6 @@
 # ![](zigbee4_1.jpg)
 # ![](zigbee4_3.jpg)
 # ![](homeassistant.png)
+# ![](HUAWEI_TEST1.png)
+# ![](HUAWEI_TEST2.png)
+# ![](HUAWEI_TEST3.png)
