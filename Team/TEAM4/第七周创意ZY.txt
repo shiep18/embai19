@@ -1,0 +1,2 @@
+摄像头识别到对象用homeassistant语音播报
+/homeassistant短信提示
