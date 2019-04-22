@@ -1,2 +1,0 @@
-![](kq.JPG)
-![](draw.JPG)
