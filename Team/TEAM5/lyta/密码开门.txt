@@ -1,0 +1,141 @@
+#include <Servo.h>
+
+Servo servo_6;
+long item;
+
+
+char code_input[4] = {};
+
+char code_original[4] = {'1','2','3','1'};
+
+char dakai[8] = {'o','p','e','n','d','o','o','r'};
+
+char jiaoyan[10] {'b','e','g','i','n','c','h','e','c','k'};
+
+int i = 0;
+
+int flag_equal = 0;
+
+
+
+void input_code();
+
+void check_mode();
+
+void serial_read_to_control();
+
+
+
+void setup()
+
+{
+
+  Serial.begin(9600);
+
+  servo_6.attach(6);
+
+}
+
+
+
+void loop()
+
+{
+
+  input_code();
+
+  serial_read_to_control();
+
+  delay(500);
+
+  digitalWrite(0,LOW);
+
+}
+
+
+
+void input_code()
+
+{
+
+  if (!digitalRead(4)) {
+
+    code_input[i] = '1';
+
+    i++;
+
+    digitalWrite(0,HIGH);
+
+  }
+
+  if (!digitalRead(12)) {
+
+    code_input[i] = '2';
+
+    i++;
+
+    digitalWrite(0,HIGH);
+
+  }
+
+  if (!digitalRead(10)) {
+
+    code_input[i] = '3';
+
+    i++;
+
+    digitalWrite(0,HIGH);
+
+  }
+
+  if (i >3) {
+
+    Serial.write(code_input,4);
+
+    i = 0;
+
+    code_input[4] = {};
+
+    check_mode();
+
+  }
+
+}
+
+void check_mode()
+
+{  
+
+  for(int ii=0;ii<=3;ii++){
+
+    if(code_input[ii] == code_original[ii]) flag_equal = 1;
+
+    else {flag_equal = 0;break;}
+
+  }
+
+  if(flag_equal == 1) {Serial.write(dakai,8);servo_6.write(180);flag_equal = 0;}
+
+}
+
+void serial_read_to_control()
+
+{
+
+  if (Serial.available() > 0) {
+    item = Serial.read();
+
+  }
+  if (item == '0') {
+    Serial.println("hello 0");
+    servo_6.write(180);
+    delay(0);
+
+  }
+  if (item == '1') {
+    Serial.println("hello 1");
+    servo_6.write(90);
+    delay(0);
+
+  }
+}
