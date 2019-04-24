@@ -1,0 +1,46 @@
+- id: '1553567109192'
+  alias: new
+  trigger:
+  - at: '11:05:00'
+    platform: time
+  condition: []
+  action:
+  - data:
+      brightness: 150
+      rgb_color:
+      - 0
+      - 255
+      - 0
+    service: light.turn_on
+- id: '1555986236769'
+  alias: 欢迎回家
+  trigger:
+  - entity_id: light.hue_color_lamp_1_2
+    for: '1'
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      cache: 'False'
+      message: 欢迎回家
+      options:
+        person: '1 '
+        speed: '5'
+    service: tts.baidu_say
+- id: '1555998170631'
+  alias: 开门
+  trigger:
+  - entity_id: light.hue_color_lamp_1_2
+    for: '1'
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: 家门打开
+      target:
+      - '+8615821383338'
+    service: notify.my_twilio_sms
