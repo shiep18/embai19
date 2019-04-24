@@ -1,0 +1,71 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 39.9288
+  longitude: 116.3889
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Shanghai
+  # Customization file
+  customize: !include customize.yaml
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Show the introduction message on startup.
+introduction:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Sensors
+
+
+sensor: 
+   - platform: darksky
+     api_key: 1afa8cd9c24fffef9875ee0a728179c1  
+     monitored_conditions: 
+       - summary      
+       - precip_type         
+       - precip_intensity        
+       - precip_probability     
+       - temperature      
+
+
+tts:
+  - platform: baidu
+    app_id: 15903480
+    api_key: 6EzVndumiYS644miyYNLm8wG
+    secret_key: GIF7FQppsovWgXTxqEqqw4ZSbpAnPOiv
+    language: zh
+    person: 4
+
+media_player:
+  - platform: kodi
+    host: 192.168.56.1
+
+
+android_ip_webcam: 
+   - host: 192.168.31.57
+     name: JL
+
+twilio:
+  account_sid: AC1c2a39314af129a0a0144de475588eef
+  auth_token: ff513f4b3c08e2b08f365280269cb549
+
+notify:
+  - name: my_twilio_sms
+    platform: twilio_sms
+    from_number: "+12015003543"
+
+emulated_hue:
+  type: alexa
+  
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
