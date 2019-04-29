@@ -1,0 +1,243 @@
+#include <Servo.h>
+
+#include <Microduino_AudioPro.h>
+
+#include <SD.h>
+
+
+
+uint8_t fileNum = 0;
+
+AudioPro_FilePlayer musicPlayer =  AudioPro_FilePlayer(SD);
+
+
+
+
+
+long item;
+
+char code_input[4] = {};
+
+char code_original[4] = {'1','4','3','1'};
+
+char dakai[8] = {'o','p','e','n','d','o','o','r'};
+
+char jiaoyan[10] {'b','e','g','i','n','c','h','e','c','k'};
+
+int i = 0;
+
+int flag_equal = 0;
+
+
+
+void input_code();
+
+void check_mode();
+
+void playNum(uint8_t);
+
+
+
+void setup()
+
+{
+
+  Serial.begin(9600);
+
+  pinMode(12,OUTPUT);
+
+  pinMode(SD_PIN_SEL, OUTPUT);
+
+  digitalWrite(SD_PIN_SEL, HIGH);
+
+  delay(500);
+
+  if (! musicPlayer.begin()) {
+
+	while (1);
+
+  }
+
+  if (!SD.begin(SD_PIN_SEL)) {
+
+        return;
+
+  }
+
+ musicPlayer.setVolume(125);
+
+}
+
+
+
+void loop()
+
+{
+
+  Serial.flush();
+
+  input_code();
+
+  delay(500);
+
+  digitalWrite(12,LOW);
+
+}
+
+
+
+void playNum(uint8_t num) {
+
+  if (num > musicPlayer.getMusicNum() - 1) {
+
+    return;
+
+  }
+
+  if (!musicPlayer.paused() || !musicPlayer.stopped()) {
+
+    musicPlayer.stopPlaying();
+
+  }
+
+  String _name = musicPlayer.getMusicName(num);
+
+  //Serial.print(F("Playing:"));
+
+  if (!musicPlayer.playMP3(_name)) {
+
+	//Serial.println(F("ERROR"));
+
+     }
+
+  else {
+
+		//Serial.print(F("OK 	 File: "));
+
+		//Serial.println(_name);
+
+	}
+
+}
+
+
+
+void input_code()
+
+{
+
+  if (!digitalRead(0)) {
+
+    code_input[i] = '1';
+
+    i++;
+
+    digitalWrite(12,HIGH);
+
+  }
+
+  if (!digitalRead(1)) {
+
+    code_input[i] = '2';
+
+    i++;
+
+    digitalWrite(12,HIGH);
+
+  }
+
+  if (!digitalRead(2)) {
+
+    code_input[i] = '3';
+
+    i++;
+
+    digitalWrite(12,HIGH);
+
+  }
+
+  if (!digitalRead(3)) {
+
+    code_input[i] = '4';
+
+    i++;
+
+    digitalWrite(12,HIGH);
+
+  }
+
+  if (!digitalRead(4)) {
+
+    code_input[i] = '5';
+
+    i++;
+
+    digitalWrite(12,HIGH);
+
+  }
+
+  if (!digitalRead(5)) {
+
+    code_input[i] = '6';
+
+    i++;
+
+    digitalWrite(12,HIGH);
+
+  }
+
+  if (!digitalRead(8)) {
+
+    code_input[i] = '7';
+
+    i++;
+
+    digitalWrite(12,HIGH);
+
+  }
+
+  if (!digitalRead(9)) {
+
+    code_input[i] = '8';
+
+    i++;
+
+    digitalWrite(12,HIGH);
+
+  }
+
+  if (i >3) {
+
+    //Serial.write(code_input,4);
+
+    i = 0;
+
+    check_mode();
+
+    delay(4000);
+
+    code_input[4] = {};
+
+  }
+
+}
+
+
+
+void check_mode()
+
+{  
+
+  for(int ii=0;ii<=3;ii++){
+
+    if(code_input[ii] == code_original[ii]) flag_equal = 1;
+
+    else {flag_equal = 0;break;}
+
+  }
+
+  if(flag_equal == 1) {Serial.write(dakai,8);playNum(1);flag_equal = 0;}
+
+  else playNum(2);
+
+}
