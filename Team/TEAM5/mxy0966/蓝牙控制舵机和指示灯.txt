@@ -1,0 +1,39 @@
+#include <SoftwareSerial.h>
+#include <Servo.h>
+String currentInfo="";
+#define my_Serial Serial
+Servo servo_2;
+void BLE_to_control();
+void setup()
+{
+  Serial.begin(57600);
+  my_Serial.begin(57600);
+  pinMode(12, OUTPUT);
+  servo_2.attach(2);
+}
+void loop()
+{
+  digitalWrite(12,LOW);
+  BLE_to_control();
+   if (!digitalRead(10)) {
+    digitalWrite(12,HIGH);
+    servo_2.write(90);
+  }
+}
+void BLE_to_control()
+{
+if (my_Serial.available() > 0) {
+   currentInfo = my_Serial.readStringUntil('\n');
+    if (currentInfo == "on") {
+      servo_2.write(180);
+      digitalWrite(12,HIGH);
+      my_Serial.println("Open successfully!");
+      delay(50);
+    } else if (currentInfo == "off") {
+      servo_2.write(90);
+      my_Serial.println("Closed!");
+      digitalWrite(12,HIGH);
+      delay(50);
+    }
+  }
+}

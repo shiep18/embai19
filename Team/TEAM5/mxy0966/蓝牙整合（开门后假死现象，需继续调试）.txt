@@ -1,0 +1,118 @@
+#include <Servo.h>
+#include <U8glib.h>
+#include <SoftwareSerial.h>
+#define my_Serial Serial
+Servo servo_2;
+long item;
+String currentInfo="";
+U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE);
+#define setFont_L u8g.setFont(u8g_font_unifont)
+#define setFont_S u8g.setFont(u8g_font_fixed_v0r)
+#define setFont_M u8g.setFont(u8g_font_9x15)
+char code_input[4] = {};
+char code_original[4] = {'1','2','3','1'};
+char dakai[8] = {'o','p','e','n','d','o','o','r'};
+char jiaoyan[10] {'b','e','g','i','n','c','h','e','c','k'};
+int i = 0;
+int flag_equal = 0;
+void input_code();
+void check_mode();
+void serial_read_to_control();
+void setup()
+{
+  Serial.begin(9600);
+  my_Serial.begin(57600);
+  servo_2.attach(2);
+  pinMode(12,OUTPUT);
+  u8g.undoRotation();
+  u8g.firstPage();
+  do {
+    setFont_M;
+    u8g.setPrintPos(0, 20);
+    u8g.print("Enter password!");
+  } while( u8g.nextPage() );
+}
+void loop()
+{
+  if (my_Serial.available() > 0) {
+   currentInfo = my_Serial.readStringUntil('\n');
+    if (currentInfo == "on") {
+      servo_2.write(180);
+      digitalWrite(12,HIGH);
+      my_Serial.println("Open successfully!");
+    } else if (currentInfo == "off") {
+      servo_2.write(90);
+      my_Serial.println("Closed!");
+      digitalWrite(12,LOW);
+    }
+  }
+  input_code();
+  serial_read_to_control();
+  delay(500);
+  digitalWrite(12,LOW);
+  u8g.undoRotation();
+  u8g.firstPage();
+  do {
+    setFont_M;
+    u8g.setPrintPos(0, 20);
+    u8g.print(code_input);
+  } while( u8g.nextPage() );
+}
+void input_code()
+{
+  if (!digitalRead(4)) {
+    code_input[i] = '1';
+    i++;
+    digitalWrite(12,HIGH);
+  }
+  if (!digitalRead(6)) {
+    code_input[i] = '2';
+    i++;
+    digitalWrite(12,HIGH);
+  }
+  if (!digitalRead(8)) {
+    code_input[i] = '3';
+    i++;
+    digitalWrite(12,HIGH);
+  }
+  if (i >3 or i<=0 ) {
+    i = 0;
+   check_mode();
+   code_input[4] = {};
+  }
+}
+void check_mode()
+{  
+  for(int ii=0;ii<=3;ii++){
+    if(code_input[ii] == code_original[ii]) flag_equal = 1;
+    else {flag_equal = 0;break;}
+  }
+  if(flag_equal == 1) {
+  u8g.undoRotation();
+  u8g.firstPage();
+  do {
+    setFont_M;
+    u8g.setPrintPos(0, 20);
+    u8g.print("Correct password!");
+  } while( u8g.nextPage() );
+  Serial.write(dakai,8);
+  servo_2.write(180);
+  delay(2500);
+  flag_equal = 0;}
+}
+void serial_read_to_control()
+{
+  if (Serial.available() > 0) {
+    item = Serial.read();
+  }
+  if (item == '0') {
+    Serial.println("hello 0");
+    servo_2.write(180);
+    delay(2500);
+  }
+  if (item == '1') {
+    Serial.println("hello 1");
+    servo_2.write(90);
+    delay(0);
+  }
+}

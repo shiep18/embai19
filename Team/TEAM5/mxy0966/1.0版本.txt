@@ -1,0 +1,110 @@
+#include <Servo.h>
+Servo servo_2;
+long item;
+char code_input[4] = {};
+char code_original[4] = {'1','2','3','1'};
+char dakai[8] = {'o','p','e','n','d','o','o','r'};
+int i = 0;
+int flag_equal = 0;
+void input_code();
+void check_mode();
+void serial_read_to_control();
+void setup()
+{
+  Serial.begin(9600);
+  servo_2.attach(2);
+  pinMode(12,OUTPUT);
+  digitalWrite(12,LOW);
+  delay(500);
+}
+void loop()
+{
+  serial_read_to_control();
+  input_code();
+  delay(500);
+  digitalWrite(12,LOW);
+}
+void input_code()
+{
+  if (!digitalRead(4)) {
+    code_input[i] = '1';
+    i++;
+    digitalWrite(12,HIGH);
+    delay(50);
+  }
+  if (!digitalRead(5)) {
+    code_input[i] = '2';
+    i++;
+    digitalWrite(12,HIGH);
+    delay(50);
+  }
+  if (!digitalRead(6)) {
+    code_input[i] = '3';
+    i++;
+    digitalWrite(12,HIGH);
+    delay(50);
+  }
+  if (!digitalRead(7)) {
+    code_input[i] = '4';
+    i++;
+    digitalWrite(12,HIGH);
+    delay(50);
+  }
+  if (!digitalRead(8)) {
+    code_input[i] = '5';
+    i++;
+    digitalWrite(12,HIGH);
+    delay(50);
+  }
+  if (!digitalRead(9)) {
+    code_input[i] = '6';
+    i++;
+    digitalWrite(12,HIGH);
+    delay(50);
+  }
+  if (!digitalRead(10)) {
+    code_input[i] = '7';
+    i++;
+    digitalWrite(12,HIGH);
+    delay(50);
+  }
+  if (!digitalRead(11)) {
+    code_input[i] = '8';
+    i++;
+    digitalWrite(12,HIGH);
+    delay(50);
+  }
+  if (!digitalRead(13)) {
+    //code_input[i] = '9';
+    //i++;
+    digitalWrite(12,HIGH);
+    servo_2.write(90);
+    delay(50);
+  }
+  if (i >3) {
+    Serial.write(code_input,4);
+    i = 0;
+    check_mode();
+    code_input[4] = {};
+    delay(4000);
+  }
+}
+void check_mode()
+{  
+  for(int ii=0;ii<=3;ii++){
+    if(code_input[ii] == code_original[ii]) flag_equal = 1;
+    else {flag_equal = 0;break;}
+  }
+  if(flag_equal == 1) {Serial.write(dakai,8);
+   servo_2.write(180);
+   flag_equal = 0;}
+}
+void serial_read_to_control()
+{
+  if (Serial.available() > 0) {
+    item = Serial.read();}
+    if(item == '1') {servo_2.write(180);Serial.println("hello 1");delay(0);}
+    if(item == '0') {servo_2.write(90);Serial.println("hello 0");delay(0);}
+    item = 0;
+}
+//9键为关门键，将串口和密码开关门融合

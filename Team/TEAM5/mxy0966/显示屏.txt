@@ -1,0 +1,184 @@
+#include <Servo.h>
+#include <Microduino_RTC.h>
+#include <U8glib.h>
+
+Servo servo_2;
+
+RTC rtc;
+
+DateTime dateTime;
+
+char code_input[4] = {};
+
+char code_original[4] = {'1','2','3','1'};
+
+char dakai[8] = {'o','p','e','n','d','o','o','r'};
+
+char jiaoyan[10] {'b','e','g','i','n','c','h','e','c','k'};
+
+int i = 0;
+
+int flag_equal = 0;
+U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE);
+
+#define setFont_L u8g.setFont(u8g_font_unifont)
+
+#define setFont_S u8g.setFont(u8g_font_fixed_v0r)
+
+#define setFont_M u8g.setFont(u8g_font_9x15)
+
+
+
+void input_code();
+
+void check_mode();
+
+void serial_read_to_control();
+
+
+
+void setup()
+
+{
+
+  Serial.begin(9600);
+
+  servo_2.attach(2);
+    rtc.begin();
+
+  dateTime = {2019, 4, 2, 16, 18, 46, 0};
+
+rtc.clearAll();
+
+rtc.setDateTime(dateTime);
+
+}
+
+
+
+void loop()
+
+{
+  rtc.getDateTime(&dateTime);
+
+  u8g.undoRotation();
+
+  u8g.firstPage();
+
+  do {
+
+    setFont_L;
+
+    u8g.setScale2x2();
+
+    u8g.setPrintPos(0, 30);
+
+    u8g.print(String(String(String(String(dateTime.hour) + String(":")) + String(dateTime.minute)) + String(":")) + String(dateTime.second));
+
+    u8g.undoScale();
+
+    setFont_S;
+
+    u8g.setPrintPos(0, 20);
+
+    u8g.print(String(String(String(String(dateTime.year) + String("/")) + String(dateTime.month)) + String("/")) + String(dateTime.day));
+
+    setFont_S;
+
+    u8g.setPrintPos(100, 20);
+
+    u8g.print(dateTime.weekday);
+
+  } while( u8g.nextPage() );
+
+  input_code();
+
+  serial_read_to_control();
+
+  delay(500);
+
+  digitalWrite(0,LOW);
+
+}
+
+
+
+void input_code()
+
+{
+
+  if (!digitalRead(4)) {
+
+    code_input[i] = '1';
+
+    i++;
+
+    digitalWrite(0,HIGH);
+
+  }
+
+  if (!digitalRead(12)) {
+
+    code_input[i] = '2';
+
+    i++;
+
+    digitalWrite(0,HIGH);
+
+  }
+
+  if (!digitalRead(10)) {
+
+    code_input[i] = '3';
+
+    i++;
+
+    digitalWrite(0,HIGH);
+
+  }
+
+  if (i >3) {
+
+    Serial.write(code_input,4);
+
+    i = 0;
+
+    code_input[4] = {};
+
+    check_mode();
+
+  }
+
+}
+
+void check_mode()
+
+{  
+
+  for(int ii=0;ii<=3;ii++){
+
+    if(code_input[ii] == code_original[ii]) flag_equal = 1;
+
+    else {flag_equal = 0;break;}
+
+  }
+
+  if(flag_equal == 1) {Serial.write(dakai,8);servo_2.write(180);flag_equal = 0;}
+
+}
+
+void serial_read_to_control()
+
+{
+
+  if (Serial.available() > 0) {
+
+    Serial.write(Serial.read());
+
+    if(Serial.read() == '1') servo_2.write(180);
+
+    if(Serial.read() == '0') servo_2.write((-180));
+
+  }
+
+}
