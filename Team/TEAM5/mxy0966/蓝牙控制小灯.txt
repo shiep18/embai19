@@ -1,0 +1,21 @@
+void setup()
+{
+  Serial.begin(57600);
+  pinMode(D6,OUTPUT);
+}
+
+
+void loop()
+{
+  if(Serial.available())
+  {
+    char c = Serial.read();
+    if(c=='n')
+    {
+      digitalWrite(D6,HIGH);
+    }else if(c=='f')
+    {
+      digitalWrite(D6,LOW);
+    }
+  }
+}

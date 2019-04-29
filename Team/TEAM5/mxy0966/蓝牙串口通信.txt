@@ -1,0 +1,26 @@
+#include <SoftwareSerial.h>
+
+String item;
+String currentInfo="";
+#define my_Serial Serial
+
+void setup()
+{
+  item = "";
+  my_Serial.begin(9600);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  if (my_Serial.available() > 0) {
+   currentInfo = my_Serial.readStringUntil('\n');
+    Serial.println(currentInfo);
+    my_Serial.println("mCookie!（手机发电脑显）");
+  }
+  if (Serial.available() > 0) {
+    item = Serial.readString();
+    my_Serial.println(item);
+    Serial.println(currentInfo);
+  }
+}
