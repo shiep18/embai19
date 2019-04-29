@@ -1,0 +1,21 @@
+String i;
+String item;
+
+void setup()
+{
+  Serial.begin(9600);
+  i = '0';
+  item = '1';
+  Serial.println(i);
+}
+
+void loop()
+{
+  while (!digitalRead(4)) {
+    Serial.println(item);
+    delay(2000);
+    Serial.println(i);
+    break;
+  }
+
+}
